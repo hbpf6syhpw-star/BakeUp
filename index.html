@@ -1,0 +1,1262 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>BakeApp 🍰</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #4b2e24;
+    background:
+        radial-gradient(circle at 10% 20%, #ffd6e7 0 3px, transparent 4px),
+        radial-gradient(circle at 90% 30%, #ffe09a 0 4px, transparent 5px),
+        #fff8f1;
+}
+
+/* HEADER */
+
+header {
+    background: linear-gradient(90deg, #ff6f9c, #ff9b7a);
+    color: white;
+    padding: 18px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 15px #e7b7c5;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.nav button {
+    background: white;
+    color: #d94f70;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 25px;
+    margin-left: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* HERO */
+
+.hero {
+    text-align: center;
+    padding: 75px 20px;
+    background: linear-gradient(135deg, #ffd1df, #ffe8bb);
+}
+
+.hero h2 {
+    font-size: 48px;
+    margin: 0;
+}
+
+.hero p {
+    font-size: 20px;
+}
+
+.mainButton {
+    background: #ff5c8a;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 30px;
+    font-size: 17px;
+    cursor: pointer;
+    box-shadow: 0 5px 0 #d9436e;
+}
+
+.mainButton:active {
+    transform: translateY(4px);
+    box-shadow: none;
+}
+
+/* GENERAL */
+
+.container {
+    max-width: 1050px;
+    margin: auto;
+    padding: 35px 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.center {
+    text-align: center;
+}
+
+/* RECIPE CARDS */
+
+.recipeGrid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+    gap: 22px;
+}
+
+.recipeCard {
+    background: white;
+    border-radius: 25px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: 0 7px 20px rgba(120,70,50,0.12);
+    transition: 0.2s;
+}
+
+.recipeCard:hover {
+    transform: translateY(-6px);
+}
+
+.recipeEmoji {
+    font-size: 75px;
+}
+
+.recipeCard button {
+    background: #ff8bab;
+    color: white;
+    border: none;
+    padding: 11px 18px;
+    border-radius: 25px;
+    cursor: pointer;
+}
+
+.locked {
+    border: 3px solid #ffd166;
+    background: #fffdf5;
+}
+
+/* XP */
+
+.xpBox {
+    background: linear-gradient(90deg,#fff0a8,#ffe0ef);
+    padding: 17px;
+    border-radius: 20px;
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 18px;
+}
+
+/* PANELS */
+
+.panel {
+    background: white;
+    max-width: 800px;
+    margin: 35px auto;
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 8px 25px rgba(80,40,20,0.12);
+}
+
+.backButton {
+    border: none;
+    background: #ffe1ea;
+    color: #c34262;
+    padding: 8px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+/* INGREDIENTS */
+
+.ingredient {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #fff7ef;
+    padding: 13px;
+    border-radius: 14px;
+    margin: 10px 0;
+}
+
+.ingredient input {
+    width: 20px;
+    height: 20px;
+}
+
+.ingredient.done span {
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+.subButton {
+    margin-left: auto;
+    border: none;
+    background: #eadfff;
+    color: #7253b7;
+    padding: 7px 10px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+/* AI */
+
+.aiBox {
+    margin-top: 25px;
+    background: linear-gradient(135deg,#eee4ff,#e4f2ff);
+    padding: 22px;
+    border-radius: 20px;
+}
+
+.aiInput {
+    width: 70%;
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+}
+
+.aiButton {
+    padding: 12px;
+    background: #8767d8;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+/* COOK ALONG */
+
+.cookPanel {
+    text-align: center;
+}
+
+.bowlArea {
+    height: 250px;
+    position: relative;
+}
+
+.bowl {
+    font-size: 140px;
+    margin-top: 35px;
+    transition: 0.5s;
+}
+
+.ingredientDrop {
+    font-size: 50px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: drop 1s;
+}
+
+@keyframes drop {
+
+    from {
+        top: -80px;
+        opacity: 0;
+    }
+
+    to {
+        top: 110px;
+        opacity: 1;
+    }
+
+}
+
+.stepText {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.stepNumber {
+    color: #999;
+}
+
+/* FINISH */
+
+.finish {
+    text-align: center;
+}
+
+.bigCake {
+    font-size: 110px;
+}
+
+/* CONFETTI */
+
+.confetti {
+    position: fixed;
+    top: -20px;
+    width: 12px;
+    height: 18px;
+    animation: fall 3s linear forwards;
+    z-index: 999;
+}
+
+@keyframes fall {
+
+    to {
+        transform:
+            translateY(110vh)
+            rotate(720deg);
+        opacity: 0;
+    }
+
+}
+
+/* FOOTER */
+
+footer {
+    background: #4b2e24;
+    color: white;
+    text-align: center;
+    padding: 30px;
+    margin-top: 50px;
+}
+
+@media(max-width:600px) {
+
+    header {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .hero h2 {
+        font-size: 35px;
+    }
+
+    .aiInput {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<header>
+
+<h1>🍰 BakeApp</h1>
+
+<div class="nav">
+
+<button onclick="showHome()">Home</button>
+
+<button onclick="showProfile()">👤 Profile</button>
+
+<button onclick="showPremium()">⭐ Premium</button>
+
+</div>
+
+</header>
+
+
+<!-- HOME -->
+
+<section id="home">
+
+<div class="hero">
+
+<h2>🍰 Bake it. Play it. Master it.</h2>
+
+<p>
+Your digital baking companion.
+</p>
+
+<button class="mainButton" onclick="goRecipes()">
+🍪 Explore Recipes
+</button>
+
+</div>
+
+
+<div class="container">
+
+<div class="xpBox">
+
+⭐ Baker XP:
+<strong id="xpHome">0</strong>
+
+</div>
+
+<h2 class="center">🍪 Choose Something Delicious</h2>
+
+<div class="recipeGrid">
+
+
+<!-- BROWNIE -->
+
+<div class="recipeCard">
+
+<div class="recipeEmoji">🍫</div>
+
+<h3>Chocolate Brownies</h3>
+
+<p>Rich, gooey and chocolatey.</p>
+
+<button onclick="openRecipe('brownie')">
+VIEW RECIPE
+</button>
+
+</div>
+
+
+<!-- FLAPJACK -->
+
+<div class="recipeCard">
+
+<div class="recipeEmoji">🥞</div>
+
+<h3>Flapjacks</h3>
+
+<p>Sweet and chewy.</p>
+
+<button onclick="openRecipe('flapjack')">
+VIEW RECIPE
+</button>
+
+</div>
+
+
+<!-- COOKIES -->
+
+<div class="recipeCard">
+
+<div class="recipeEmoji">🍪</div>
+
+<h3>Chocolate Cookies</h3>
+
+<p>Soft and delicious.</p>
+
+<button onclick="openRecipe('cookie')">
+VIEW RECIPE
+</button>
+
+</div>
+
+
+<!-- PREMIUM -->
+
+<div class="recipeCard locked">
+
+<div class="recipeEmoji">🍓</div>
+
+<h3>Strawberry Cake</h3>
+
+<p>⭐ Premium</p>
+
+<button onclick="showPremium()">
+🔒 UNLOCK
+</button>
+
+</div>
+
+
+<div class="recipeCard locked">
+
+<div class="recipeEmoji">🥐</div>
+
+<h3>Croissants</h3>
+
+<p>⭐ Premium</p>
+
+<button onclick="showPremium()">
+🔒 UNLOCK
+</button>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- RECIPE PAGE -->
+
+<section id="recipePage" class="hidden">
+
+<div class="panel">
+
+<button class="backButton" onclick="showHome()">
+← Back
+</button>
+
+<h1 id="recipeTitle"></h1>
+
+<p id="recipeDescription"></p>
+
+
+<h2>🧾 Ingredient Checklist</h2>
+
+<p>
+Tick the ingredients you already have.
+</p>
+
+<div id="ingredients"></div>
+
+
+<div class="aiBox">
+
+<h2>🤖 Baking AI</h2>
+
+<p>
+Need help? Ask your baking assistant.
+</p>
+
+<input
+class="aiInput"
+id="aiQuestion"
+placeholder="e.g. My batter is too thick..."
+>
+
+<button class="aiButton" onclick="askAI()">
+ASK
+</button>
+
+<p id="aiAnswer"></p>
+
+</div>
+
+
+<div class="center">
+
+<button
+class="mainButton"
+onclick="startCooking()"
+>
+
+🎮 START COOK-ALONG
+
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- COOKING PAGE -->
+
+<section id="cookPage" class="hidden">
+
+<div class="panel cookPanel">
+
+<h1>🎮 Cook-Along Mode</h1>
+
+<div class="bowlArea">
+
+<div id="drop"></div>
+
+<div class="bowl" id="bowl">
+🥣
+</div>
+
+</div>
+
+<p class="stepText" id="stepText"></p>
+
+<p class="stepNumber" id="stepNumber"></p>
+
+<button
+class="mainButton"
+onclick="nextStep()"
+>
+
+✓ DONE — NEXT STEP
+
+</button>
+
+</div>
+
+</section>
+
+
+<!-- PROFILE -->
+
+<section id="profilePage" class="hidden">
+
+<div class="panel">
+
+<h1>👤 My Baker Profile</h1>
+
+<div class="xpBox">
+
+⭐ XP:
+<strong id="xpProfile">0</strong>
+
+</div>
+
+<h2>🏆 Achievements</h2>
+
+<p>🧁 First Bake</p>
+
+<p>🍪 Cookie Master</p>
+
+<p>🎂 Cake Maker</p>
+
+<p>🔥 Baking Streak</p>
+
+</div>
+
+</section>
+
+
+<!-- PREMIUM -->
+
+<section id="premiumPage" class="hidden">
+
+<div class="panel center">
+
+<div style="font-size:90px;">
+⭐
+</div>
+
+<h1>BakeApp Premium</h1>
+
+<h2>¥10 / 45 days</h2>
+
+<p>
+Unlock special recipes, drinks,
+advanced baking experiences and more.
+</p>
+
+<button class="mainButton" onclick="fakePurchase()">
+
+⭐ GET PREMIUM
+
+</button>
+
+<br><br>
+
+<button class="backButton" onclick="showHome()">
+
+← Back
+
+</button>
+
+</div>
+
+</section>
+
+
+<footer>
+
+🍰 BakeApp
+
+<br><br>
+
+Bake it. Play it. Master it.
+
+</footer>
+
+
+<script>
+
+
+/* DATA */
+
+const recipes = {
+
+brownie: {
+
+title: "🍫 Chocolate Brownies",
+
+description:
+"Rich, gooey chocolate brownies.",
+
+ingredients: [
+
+["Flour","100g"],
+
+["Sugar","150g"],
+
+["Butter","100g"],
+
+["Eggs","2"],
+
+["Cocoa powder","40g"]
+
+],
+
+steps: [
+
+["Flour","Add 100g of flour to the bowl."],
+
+["Cocoa","Add the cocoa powder."],
+
+["Sugar","Add the sugar."],
+
+["Butter","Add the melted butter."],
+
+["Eggs","Add the eggs."],
+
+["Mix","Mix everything together."],
+
+["Tray","Pour the mixture into your tray."],
+
+["Bake","Bake your brownies."],
+
+["Cool","Let them cool."]
+
+]
+
+},
+
+
+flapjack: {
+
+title: "🥞 Flapjacks",
+
+description:
+"Sweet and chewy oat flapjacks.",
+
+ingredients: [
+
+["Oats","200g"],
+
+["Butter","100g"],
+
+["Sugar","80g"],
+
+["Golden syrup","3 tbsp"]
+
+],
+
+steps: [
+
+["Butter","Melt the butter."],
+
+["Sugar","Add the sugar."],
+
+["Syrup","Add the golden syrup."],
+
+["Oats","Add the oats."],
+
+["Mix","Mix everything together."],
+
+["Tray","Put the mixture into your tray."],
+
+["Bake","Bake until golden."],
+
+["Cool","Let them cool."]
+
+]
+
+},
+
+
+cookie: {
+
+title: "🍪 Chocolate Cookies",
+
+description:
+"Soft chocolate chip cookies.",
+
+ingredients: [
+
+["Flour","150g"],
+
+["Butter","100g"],
+
+["Sugar","100g"],
+
+["Egg","1"],
+
+["Chocolate chips","100g"]
+
+],
+
+steps: [
+
+["Butter","Mix the butter and sugar."],
+
+["Egg","Add the egg."],
+
+["Flour","Add the flour."],
+
+["Chocolate","Add the chocolate chips."],
+
+["Mix","Mix everything together."],
+
+["Shape","Shape your cookies."],
+
+["Bake","Bake the cookies."],
+
+["Cool","Let them cool."]
+
+]
+
+}
+
+};
+
+
+/* VARIABLES */
+
+let currentRecipe = "";
+
+let currentStep = 0;
+
+let xp = 0;
+
+
+/* PAGE CONTROL */
+
+function hidePages() {
+
+document.getElementById("home")
+.classList.add("hidden");
+
+document.getElementById("recipePage")
+.classList.add("hidden");
+
+document.getElementById("cookPage")
+.classList.add("hidden");
+
+document.getElementById("profilePage")
+.classList.add("hidden");
+
+document.getElementById("premiumPage")
+.classList.add("hidden");
+
+}
+
+
+function showHome() {
+
+hidePages();
+
+document.getElementById("home")
+.classList.remove("hidden");
+
+}
+
+
+function goRecipes() {
+
+document.querySelector(".recipeGrid")
+.scrollIntoView({
+behavior:"smooth"
+});
+
+}
+
+
+/* RECIPE */
+
+function openRecipe(name) {
+
+hidePages();
+
+currentRecipe = name;
+
+const recipe = recipes[name];
+
+document.getElementById("recipeTitle")
+.innerText = recipe.title;
+
+document.getElementById("recipeDescription")
+.innerText = recipe.description;
+
+
+const list =
+document.getElementById("ingredients");
+
+list.innerHTML = "";
+
+
+recipe.ingredients.forEach(function(item,index){
+
+const row =
+document.createElement("div");
+
+row.className = "ingredient";
+
+
+row.innerHTML = `
+
+<input
+type="checkbox"
+onchange="checkIngredient(this)"
+>
+
+<span>
+<strong>${item[0]}</strong>
+— ${item[1]}
+</span>
+
+<button
+class="subButton"
+onclick="substitute('${item[0]}')"
+>
+🔄 Substitute
+</button>
+
+`;
+
+
+list.appendChild(row);
+
+});
+
+
+document.getElementById("recipePage")
+.classList.remove("hidden");
+
+}
+
+
+/* CHECKLIST */
+
+function checkIngredient(box) {
+
+const row = box.parentElement;
+
+if(box.checked) {
+
+row.classList.add("done");
+
+} else {
+
+row.classList.remove("done");
+
+}
+
+}
+
+
+/* SUBSTITUTIONS */
+
+function substitute(name) {
+
+let message = "";
+
+if(name === "Flour") {
+
+message =
+"Possible alternatives depend on the recipe. Oat flour or another suitable flour may work, but the texture can change.";
+
+}
+
+else if(name === "Butter") {
+
+message =
+"Depending on the recipe, margarine or another suitable fat may work.";
+
+}
+
+else if(name === "Eggs") {
+
+message =
+"Egg substitutes vary by recipe. Ask the Baking AI about this specific recipe.";
+
+}
+
+else {
+
+message =
+"There may be an alternative, but it depends on the recipe.";
+
+}
+
+alert("🔄 Substitute idea:\n\n" + message);
+
+}
+
+
+/* AI */
+
+function askAI() {
+
+const question =
+document.getElementById("aiQuestion")
+.value
+.toLowerCase();
+
+const answer =
+document.getElementById("aiAnswer");
+
+
+if(question.trim() === "") {
+
+answer.innerText =
+"🤖 Ask me a baking question first!";
+
+return;
+
+}
+
+
+if(question.includes("thick")) {
+
+answer.innerText =
+"🤖 Your batter may need a little more liquid, but add it gradually. Don't add lots at once.";
+
+}
+
+else if(question.includes("flour")) {
+
+answer.innerText =
+"🤖 Tell me what flour you have and I can help you think about whether it could work.";
+
+}
+
+else if(question.includes("oven")) {
+
+answer.innerText =
+"🤖 Follow the recipe temperature and keep an eye on your bake. Ovens can vary.";
+
+}
+
+else {
+
+answer.innerText =
+"🤖 Great question! In the full version, I'll be connected to a real AI baking assistant that can answer recipe-specific questions.";
+
+}
+
+}
+
+
+/* COOK MODE */
+
+function startCooking() {
+
+hidePages();
+
+currentStep = 0;
+
+showCookingStep();
+
+document.getElementById("cookPage")
+.classList.remove("hidden");
+
+}
+
+
+function showCookingStep() {
+
+const recipe =
+recipes[currentRecipe];
+
+const step =
+recipe.steps[currentStep];
+
+document.getElementById("stepText")
+.innerText = step[1];
+
+document.getElementById("stepNumber")
+.innerText =
+"Step " +
+(currentStep + 1) +
+" of " +
+recipe.steps.length;
+
+
+/* ANIMATION */
+
+const drop =
+document.getElementById("drop");
+
+drop.innerHTML =
+`<div class="ingredientDrop">🧂</div>`;
+
+setTimeout(function(){
+
+drop.innerHTML = "";
+
+},1000);
+
+}
+
+
+function nextStep() {
+
+const recipe =
+recipes[currentRecipe];
+
+currentStep++;
+
+
+if(currentStep >= recipe.steps.length) {
+
+finishBake();
+
+return;
+
+}
+
+showCookingStep();
+
+}
+
+
+/* FINISH */
+
+function finishBake() {
+
+xp += 100;
+
+document.getElementById("xpHome")
+.innerText = xp;
+
+document.getElementById("xpProfile")
+.innerText = xp;
+
+
+document.getElementById("cookPage")
+.innerHTML = `
+
+<div class="panel finish">
+
+<div class="bigCake">
+🎂
+</div>
+
+<h1>🎉 YOU DID IT!</h1>
+
+<h2>
+You completed your bake!
+</h2>
+
+<h2>
+⭐ +100 XP
+</h2>
+
+<p>
+🏆 Achievement unlocked:
+</p>
+
+<p>
+🧁 First Bake
+</p>
+
+<p>
+📸 Soon you'll be able to upload a photo of your creation!
+</p>
+
+<button
+class="mainButton"
+onclick="confetti()"
+>
+🎉 CELEBRATE!
+</button>
+
+<br><br>
+
+<button
+class="backButton"
+onclick="showHome()"
+>
+🏠 BACK HOME
+</button>
+
+</div>
+
+`;
+
+}
+
+
+/* CONFETTI */
+
+function confetti() {
+
+const colors = [
+
+"#ff5c8a",
+"#ffd166",
+"#6ecbff",
+"#8ee28e",
+"#a78bfa",
+"#ff9f43"
+
+];
+
+
+for(let i=0;i<100;i++){
+
+const piece =
+document.createElement("div");
+
+piece.className = "confetti";
+
+piece.style.left =
+Math.random()*100 + "%";
+
+piece.style.background =
+colors[
+Math.floor(Math.random()*colors.length)
+];
+
+piece.style.animationDelay =
+Math.random()*1.5 + "s";
+
+document.body.appendChild(piece);
+
+
+setTimeout(function(){
+
+piece.remove();
+
+},4000);
+
+}
+
+}
+
+
+/* PROFILE */
+
+function showProfile() {
+
+hidePages();
+
+document.getElementById("profilePage")
+.classList.remove("hidden");
+
+}
+
+
+/* PREMIUM */
+
+function showPremium() {
+
+hidePages();
+
+document.getElementById("premiumPage")
+.classList.remove("hidden");
+
+}
+
+
+function fakePurchase() {
+
+alert(
+"⭐ Premium checkout will be connected later.\n\nFor now this is only a prototype — no money will be charged."
+);
+
+}
+
+</script>
+
+</body>
+</html>
+```
+ 
